@@ -1,0 +1,35 @@
+{
+  "name": "lim011-fe-md-links",
+  "version": "1.0.0",
+  "description": "## Preámbulo",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "htmlhint": "^0.11.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "jest": "^25.1.0"
+  },
+  "scripts": {
+    "eslint": "eslint --ext .js src/ test/",
+    "pretest": "npm run htmlhint && npm run eslint && npm run stylelint",
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyas777/LIM011-fe-md-links.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lyas777/LIM011-fe-md-links/issues"
+  },
+  "homepage": "https://github.com/lyas777/LIM011-fe-md-links#readme"
+}

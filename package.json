@@ -22,7 +22,8 @@
     "eslint": "eslint --ext .js src/ test/",
     "pretest": "npm run eslint",
     "test": "jest --coverage",
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "start": "babel src -d lib && node lib/md-links/path.js"
   },
   "repository": {
     "type": "git",

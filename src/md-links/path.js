@@ -13,8 +13,6 @@ export const checkIfRouteIsAbosulte = (route) => {
   return route;
 };
 
-console.log('para test', checkIfRouteIsAbosulte('prueba.md'));
-
 export const checkIsFile = (route) => fs.statSync(route).isFile();
 
 export const fileReturn = (route) => {
@@ -23,18 +21,21 @@ export const fileReturn = (route) => {
     arrayOfPathFile.push(route);
   } else {
     const files = fs.readdirSync(route);
-    console.log('verifica los directorios', files); // lee el directorio de la ruta
+    // console.log('verifica los directorios', files); // lee el directorio de la ruta
     files.forEach((file) => {
       const newRoute = path.join(route, file);
-      console.log('que me da:', newRoute);
+      // console.log('que me da:', newRoute);
       arrayOfPathFile = arrayOfPathFile.concat(fileReturn(newRoute));
     });
   }
   return arrayOfPathFile;
 };
-export const checkIsMd = (route) => fileReturn(route).filter((element) => path.extname(element) === '.md');
+
+export const checkIsMd = (arrayFiles) => arrayFiles.filter((element) => path.extname(element) === '.md');
 // esto para considerar en la programación
+
 export const readFile = (route) => fs.readFileSync(route, 'utf8');
+
 const mdFile = readFile('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba/paraTest/prueba.md');
 const patron1 = /(^|[^!])\[(.*)\]\((.*)\)/g;
 const patron2 = /\((.*)\)/g;

@@ -1,5 +1,5 @@
 import {
-  checkIfRouteIsAbosulte,
+  validateAbosultePath,
   checkIsFile,
   fileReturn,
   checkIsMd,
@@ -9,8 +9,8 @@ const ruta = '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-l
 const ruta1 = 'test/prueba/paraTest/prueba.md';
 const ruta2 = '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/src/md-links';
 const array1 = [
-  '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/src/md-links/links.js',
   '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/src/md-links/path.js',
+  '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/src/md-links/validaLinks.js',
 ];
 const array2 = [
   '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba/a/algo.md',
@@ -22,16 +22,16 @@ const array3 = [
   '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba/paraTest/prueba.md',
 ];
 
-describe('checkIfRouteIsAbosulte', () => {
+describe('validateAbosultePath', () => {
   it('debería ser una función', () => {
-    expect(typeof checkIfRouteIsAbosulte).toBe('function');
+    expect(typeof validateAbosultePath).toBe('function');
   });
   it('Debería verificar si la ruta es abosoluta', () => {
-    expect(checkIfRouteIsAbosulte(ruta)).toStrictEqual(ruta);
+    expect(validateAbosultePath(ruta)).toStrictEqual(ruta);
   });
 
   it('Debería verificar devolver una ruta abosoluta', () => {
-    expect(checkIfRouteIsAbosulte(ruta1)).toStrictEqual(ruta);
+    expect(validateAbosultePath(ruta1)).toStrictEqual(ruta);
   });
 });
 

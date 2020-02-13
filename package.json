@@ -7,7 +7,8 @@
     "test": "test"
   },
   "dependencies": {
-    "htmlhint": "^0.11.0"
+    "htmlhint": "^0.11.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -23,7 +24,8 @@
     "pretest": "npm run eslint",
     "test": "jest --coverage",
     "build": "babel src -d lib",
-    "start": "babel src -d lib && node lib/md-links/path.js"
+    "start": "babel src -d lib && node lib/md-links/path.js",
+    "start2": "babel src -d lib && node lib/md-links/validaLinks.js"
   },
   "repository": {
     "type": "git",

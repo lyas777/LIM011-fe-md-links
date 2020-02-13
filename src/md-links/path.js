@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 const path = require('path'); // para llamar a métodos de path
 const fs = require('fs'); // para llamar los métodos de fs
 
@@ -6,7 +5,7 @@ const fs = require('fs'); // para llamar los métodos de fs
 // export const checkIfRouteIsAbosulte = (route) => path.isAbsolute(route);
 // export const transformRelativePath = (route) => path.resolve(route);
 
-export const checkIfRouteIsAbosulte = (route) => {
+export const validateAbosultePath = (route) => {
   if (!path.isAbsolute(route)) {
     const pathAbs = path.resolve(route); // si es relativa resuelve que sea absoluta
     return pathAbs;
@@ -38,44 +37,27 @@ export const checkIsMd = (arrayFiles) => arrayFiles.filter((element) => path.ext
 export const readFile = (route) => fs.readFileSync(route, 'utf8');
 
 export const extractLink = (route) => {
-  // const newArrayLinks = [];
+  const newArrayLinks = [];
   const arrayFiles = fileReturn(route);
   const arrayMdFiles = checkIsMd(arrayFiles);
-  const patron1 = /(^|[^!])\[(.*)\]\((.*)\)/g;
-  const patron2 = /\((.*)\)/g;
-  const patron3 = /\[((.*))\]/g;
+  const patron1 = /(^|[^!])\[(.*)\]\((.*)\)/g; // primer array de nombres y links con [] y ()
+  const patron2 = /\((.*)\)/g; // para referencia
+  const patron3 = /\[((.*))\]/g; // para texto
   arrayMdFiles.forEach((element) => {
     const arrayResultMatch = readFile(element).match(patron1);
-    // console.log(arrayResultMatch);
+    const file1 = validateAbosultePath(element);
     if (arrayResultMatch !== null) {
       arrayResultMatch.forEach((e) => {
-        const href = e.match(patron2).toString();
-        const name = e.match(patron3).toString();
-        // console.log('file', path.resolve(element));
-        console.log('file', path.resolve(e));
-        console.log('las referencias', href.split((/[\(\)]/))[1]);
-        console.log('los nombres', name.split(/[\[\]]/)[1].slice(0, 60));
+        const hreference = e.match(patron2).toString().split((/[()]/))[1];
+        const texto = e.match(patron3).toString().split(/[\\[\]]/)[1];
+        newArrayLinks.push({
+          href: hreference,
+          text: texto,
+          file: file1,
+        });
       });
     }
   });
+  return newArrayLinks;
 };
 console.log(extractLink('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba'));
-
-// seccion de pruebas
-// const mdFile = readFile('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba/paraTest/prueba.md');
-// const patron1 = /(^|[^!])\[(.*)\]\((.*)\)/g;
-// const patron2 = /\((.*)\)/g;
-// const patron3 = /\[((.*))\]/g;
-
-// const arrayResultMatch = mdFile.match(patron1);
-// console.log(arrayResultMatch);
-// if (arrayResultMatch !== null) {
-//   arrayResultMatch.forEach((element) => {
-//     const href = element.match(patron2).toString();
-//     const name = element.match(patron3).toString();
-//     // console.log('file', path.resolve(element));
-//     console.log('file', path.resolve(e));
-//     console.log('las referencias', href.split((/[\(\)]/))[1]);
-//     console.log('los nombres', name.split(/[\[\]]/)[1].slice(0, 60));
-//   });
-// }

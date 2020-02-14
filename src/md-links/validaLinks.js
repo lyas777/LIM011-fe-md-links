@@ -1,9 +1,7 @@
 
 import { extractLink } from './path';
-import { promises, resolve } from 'dns';
 
 const fetch = require('node-fetch');
-const path = require('path');
 
 const linksValidate = (route) => {
   const arrayObjectLinks = extractLink(route);
@@ -39,12 +37,12 @@ const linksValidate = (route) => {
 
 // prueba('http://google.com').then((e) => console.log(e));
 
-const optionValidate = (route) => new Promise((resolve) => {
+const imprimirPromesa = (route) => {
   linksValidate(route)
-    .then((arrLinks) => {
-      const strLinks = arrLinks.map((link) => `${path.relative(process.cwd(), link.file)} ${link.href} ${link.statusText} ${link.status} ${link.text}`);
-      resolve(strLinks.join('\n'));
-    });
-});
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => console.log(error));
+};
 
-optionValidate('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/README.md');
+imprimirPromesa('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba/paraTest/prueba.md');

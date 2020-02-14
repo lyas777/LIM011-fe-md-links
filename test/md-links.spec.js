@@ -1,5 +1,5 @@
 import {
-  validateAbosultePath,
+  convertToAbsolutePath,
   checkIsFile,
   fileReturn,
   checkIsMd,
@@ -22,16 +22,16 @@ const array3 = [
   '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba/paraTest/prueba.md',
 ];
 
-describe('validateAbosultePath', () => {
+describe('convertToAbsolutePath', () => {
   it('debería ser una función', () => {
-    expect(typeof validateAbosultePath).toBe('function');
+    expect(typeof convertToAbsolutePath).toBe('function');
   });
   it('Debería verificar si la ruta es abosoluta', () => {
-    expect(validateAbosultePath(ruta)).toStrictEqual(ruta);
+    expect(convertToAbsolutePath(ruta)).toStrictEqual(ruta);
   });
 
   it('Debería verificar devolver una ruta abosoluta', () => {
-    expect(validateAbosultePath(ruta1)).toStrictEqual(ruta);
+    expect(convertToAbsolutePath(ruta1)).toStrictEqual(ruta);
   });
 });
 

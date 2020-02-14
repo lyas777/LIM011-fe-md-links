@@ -3,11 +3,35 @@ import { extractLink } from './path';
 
 const fetch = require('node-fetch');
 
-
-const validateLinks = (routesMd) => {
-  const arrayObjectLinks = extractLink(routesMd);
-  // console.log(arrayObjectLinks);
-  const algo = arrayObjectLinks.map((elment) => elment.href);
-  console.log(algo);
+const linksValidate = (route) => {
+  const arrayObjectLinks = extractLink(route);
+  const arrayLinksPromise = arrayObjectLinks.map((link) => fetch(link.href)
+    .then((response) => {
+      if (response.ok) {
+        return {
+          ...link,
+          statusText: response.statusText,
+          status: response.status,
+        };
+      }
+      return {
+        ...link,
+        statusText: 'FAIL',
+        status: response.status,
+      };
+    })
+    .catch(() => ({
+      ...link,
+      statusText: 'FAIL',
+      status: 'ERROR',
+    })));
+  return Promise.all(arrayLinksPromise);
 };
-validateLinks('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba');
+
+linksValidate('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/README.md').then((res) => console.log(res)).catch((e) => console.log(e));
+
+
+// const prueba = (ruta) => (
+//   fetch(ruta).then((response) => response.statusText).catch((error) => console.log(error)));
+
+// prueba('http://google.com').then((e) => console.log(e));

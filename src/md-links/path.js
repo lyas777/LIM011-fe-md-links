@@ -5,13 +5,8 @@ const fs = require('fs'); // para llamar los métodos de fs
 // export const checkIfRouteIsAbosulte = (route) => path.isAbsolute(route);
 // export const transformRelativePath = (route) => path.resolve(route);
 
-export const validateAbosultePath = (route) => {
-  if (!path.isAbsolute(route)) {
-    const pathAbs = path.resolve(route); // si es relativa resuelve que sea absoluta
-    return pathAbs;
-  }
-  return route;
-};
+export const convertToAbsolutePath = (route) => (
+  path.isAbsolute(route) ? route : path.resolve(route));
 
 export const checkIsFile = (route) => fs.statSync(route).isFile();
 
@@ -32,8 +27,6 @@ export const fileReturn = (route) => {
 };
 
 export const checkIsMd = (arrayFiles) => arrayFiles.filter((element) => path.extname(element) === '.md');
-// esto para considerar en la programación
-
 export const readFile = (route) => fs.readFileSync(route, 'utf8');
 
 export const extractLink = (route) => {
@@ -45,7 +38,7 @@ export const extractLink = (route) => {
   const patron3 = /\[((.*))\]/g; // para texto
   arrayMdFiles.forEach((element) => {
     const arrayResultMatch = readFile(element).match(patron1);
-    const file1 = validateAbosultePath(element);
+    const file1 = convertToAbsolutePath(element);
     if (arrayResultMatch !== null) {
       arrayResultMatch.forEach((e) => {
         const hreference = e.match(patron2).toString().split((/[()]/))[1];
@@ -60,4 +53,3 @@ export const extractLink = (route) => {
   });
   return newArrayLinks;
 };
-console.log(extractLink('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba'));

@@ -17,14 +17,17 @@ export const fileReturn = (route) => {
   } else {
     const files = fs.readdirSync(route);
     // console.log('verifica los directorios', files); // lee el directorio de la ruta
-    files.forEach((file) => {
-      const newRoute = path.join(route, file);
+    files.forEach((element) => {
+      const newRoute = path.join(route, element);
       // console.log('que me da:', newRoute);
       arrayOfPathFile = arrayOfPathFile.concat(fileReturn(newRoute));
+      console.log(arrayOfPathFile);
     });
   }
   return arrayOfPathFile;
 };
+// console.log(fileReturn('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba'));
+
 
 export const checkIsMd = (arrayFiles) => arrayFiles.filter((element) => path.extname(element) === '.md');
 export const readFile = (route) => fs.readFileSync(route, 'utf8');

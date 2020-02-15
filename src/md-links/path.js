@@ -21,13 +21,11 @@ export const fileReturn = (route) => {
       const newRoute = path.join(route, element);
       // console.log('que me da:', newRoute);
       arrayOfPathFile = arrayOfPathFile.concat(fileReturn(newRoute));
-      console.log(arrayOfPathFile);
+      // console.log(arrayOfPathFile);
     });
   }
   return arrayOfPathFile;
 };
-// console.log(fileReturn('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba'));
-
 
 export const checkIsMd = (arrayFiles) => arrayFiles.filter((element) => path.extname(element) === '.md');
 export const readFile = (route) => fs.readFileSync(route, 'utf8');

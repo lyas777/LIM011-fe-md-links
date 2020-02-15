@@ -1,9 +1,9 @@
-
 import { extractLink } from './path';
 
 const fetch = require('node-fetch');
 
-const linksValidate = (route) => {
+// eslint-disable-next-line import/prefer-default-export
+export const linksValidate = (route) => {
   const arrayObjectLinks = extractLink(route);
   const arrayLinksPromise = arrayObjectLinks.map((link) => fetch(link.href)
     .then((response) => {
@@ -20,7 +20,7 @@ const linksValidate = (route) => {
         status: response.status,
       };
     })
-    //
+  //
     .catch(() => ({
       ...link,
       statusText: 'FAIL',
@@ -29,20 +29,22 @@ const linksValidate = (route) => {
   return Promise.all(arrayLinksPromise);
 };
 
-// linksValidate('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/README.md').then((res) => console.log(res)).catch((e) => console.log(e));
-
-
 // const prueba = (ruta) => (
 //   fetch(ruta).then((response) => response.statusText).catch((error) => console.log(error)));
 
 // prueba('http://google.com').then((e) => console.log(e));
+// console.log(typeof linksValidate);
 
-const imprimirPromesa = (route) => {
-  linksValidate(route)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((error) => console.log(error));
-};
+// export const imprimirPromesa = (route) => {
+//   linksValidate(route)
+//     .then((res) => {
+//       console.log(res);
+//     })
+//     .catch((error) => console.log(error));
+// };
 
-imprimirPromesa('/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba/paraTest/prueba.md');
+
+// const arr = [1,2,3,4,4,5,6,6,6,6,6];
+// console.log(arr);
+// const newArr = new Set(arr);
+// console.log(newArr);

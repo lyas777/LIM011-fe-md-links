@@ -7,8 +7,10 @@
     "test": "test"
   },
   "dependencies": {
+    "color": "^3.1.2",
     "htmlhint": "^0.11.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "validate.js": "^0.13.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -25,14 +27,18 @@
     "test": "jest --coverage",
     "build": "babel src -d lib",
     "start": "babel src -d lib && node lib/md-links/path.js",
-    "start2": "babel src -d lib && node lib/md-links/validaLinks.js"
+    "start2": "babel src -d lib && node lib/md-links/validaLinks.js",
+    "start3": "babel src -d lib && node lib/md-links/mdLinks.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lyas777/LIM011-fe-md-links.git"
   },
-  "author": "",
+  "author": "LYAS",
   "license": "ISC",
+  "bin": {
+    "say-hello": "src/md-links/cli.js"
+  },
   "bugs": {
     "url": "https://github.com/lyas777/LIM011-fe-md-links/issues"
   },

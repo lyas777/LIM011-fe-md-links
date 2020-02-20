@@ -5,9 +5,8 @@ import {
   checkIsMd,
   extractLink,
 } from '../src/md-links/path';
-import {
-  linksValidate,
-} from '../src/md-links/validaLinks';
+import { linksValidate } from '../src/md-links/validaLinks';
+import { mdLinks } from '../src/md-links/mdLinks';
 
 const path = require('path');
 
@@ -15,6 +14,8 @@ const ruta = path.join(process.cwd(), 'test', 'prueba', 'paraTest', 'prueba.md')
 const ruta1 = 'test/prueba/paraTest/prueba.md';
 const ruta2 = path.join(process.cwd(), 'src', 'md-links');
 const array1 = [
+  `${process.cwd()}/src/md-links/cli.js`,
+  `${process.cwd()}/src/md-links/mdLinks.js`,
   `${process.cwd()}/src/md-links/path.js`,
   `${process.cwd()}/src/md-links/validaLinks.js`,
 ];
@@ -31,18 +32,41 @@ const ruta3 = path.join(process.cwd(), 'test', 'prueba');
 const array4 = [
   {
     href: 'link.roto.com',
-    text: 'link',
+    text: 'LinkRoto',
     file: `${process.cwd()}/test/prueba/paraTest/prueba.md`,
   },
   {
     href: 'https://www.google.com/gatos',
-    text: 'Error 404',
+    text: 'Error404',
     file: `${process.cwd()}/test/prueba/paraTest/prueba.md`,
   },
   {
     href: 'https://nodejs.org/',
     text: 'Node.js',
     file: `${process.cwd()}/test/prueba/paraTest/prueba.md`,
+  },
+];
+const array5 = [
+  {
+    href: 'link.roto.com',
+    text: 'LinkRoto',
+    file: '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba/paraTest/prueba.md',
+    statusText: 'FAIL',
+    status: 'ERROR',
+  },
+  {
+    href: 'https://www.google.com/gatos',
+    text: 'Error404',
+    file: '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba/paraTest/prueba.md',
+    statusText: 'FAIL',
+    status: 404,
+  },
+  {
+    href: 'https://nodejs.org/',
+    text: 'Node.js',
+    file: '/home/lyas/Documentos/Laboratoria/Bootcamp/md-links/LIM011-fe-md-links/test/prueba/paraTest/prueba.md',
+    statusText: 'OK',
+    status: 200,
   },
 ];
 const linkOk = {
@@ -54,14 +78,14 @@ const linkOk = {
 };
 const link404 = {
   href: 'https://www.google.com/gatos',
-  text: 'Error 404',
+  text: 'Error404',
   file: `${process.cwd()}/test/prueba/paraTest/prueba.md`,
   statusText: 'FAIL',
   status: 404,
 };
 const linkFail = {
   href: 'link.roto.com',
-  text: 'link',
+  text: 'LinkRoto',
   file: `${process.cwd()}/test/prueba/paraTest/prueba.md`,
   statusText: 'FAIL',
   status: 'ERROR',
@@ -121,22 +145,38 @@ describe('extractLink', () => {
 });
 
 describe('linksValidate', () => {
-  it('debería ser una función', () => {
+  it('debería ser una función', (done) => {
     expect(typeof linksValidate).toBe('function');
+    done();
   });
-  it('debería devolver una promesa con estado Fail', () => {
-    linksValidate(ruta).then((result) => {
-      expect(result[0]).toEqual((linkFail));
-    });
+  it('debería devolver una promesa con estado Fail', (done) => linksValidate(ruta).then((result) => {
+    expect(result[0]).toEqual((linkFail));
+    done();
+  }));
+  it('debería devolver una promesa con estado 404', (done) => linksValidate(ruta).then((result) => {
+    expect(result[1]).toEqual((link404));
+    done();
+  }));
+  it('debería devolver una promesa con estado OK', (done) => linksValidate(ruta).then((result) => {
+    expect(result[2]).toEqual((linkOk));
+    done();
+  }));
+});
+
+describe('mdLinks', () => {
+  it('debería ser una función', () => {
+    expect(typeof mdLinks).toBe('function');
   });
-  it('debería devolver una promesa con estado 404', () => {
-    linksValidate(ruta).then((result) => {
-      expect(result[1]).toEqual((link404));
-    });
-  });
-  it('debería devolver una promesa con estado OK', () => {
-    linksValidate(ruta).then((result) => {
-      expect(result[2]).toEqual((linkOk));
-    });
-  });
+  it('debería retornarme un array de objetos con informacón de links y estados', (done) => mdLinks(ruta, { validate: true }).then((result) => {
+    expect(result).toStrictEqual(array5);
+    done();
+  }));
+  it('debería retornarme un array de objetos con información de links', (done) => mdLinks(ruta, { validate: false }).then((result) => {
+    expect(result).toStrictEqual(array4);
+    done();
+  }));
+  it('debería devolver message de error: No se encuentra la ruta', () => mdLinks('no-route')
+    .catch((err) => {
+      expect(err.message).toEqual(`No se encuentra la ruta: ${path.join(process.cwd(), 'no-route')}`);
+    }));
 });

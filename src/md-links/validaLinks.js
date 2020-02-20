@@ -1,6 +1,7 @@
 import { extractLink } from './path';
 
 const fetch = require('node-fetch');
+const path = require('path');
 
 // eslint-disable-next-line import/prefer-default-export
 export const linksValidate = (route) => {
@@ -29,22 +30,23 @@ export const linksValidate = (route) => {
   return Promise.all(arrayLinksPromise);
 };
 
-// const prueba = (ruta) => (
-//   fetch(ruta).then((response) => response.statusText).catch((error) => console.log(error)));
+export const optionValidate = (route) => linksValidate(route)
+  .then((arrayObjtLink) => {
+    const strLinks = arrayObjtLink.map((element) => `${path.relative(process.cwd(), element.file)} ${element.href} ${element.statusText} ${element.status} ${element.text}`);
+    return strLinks.join('\n');
+  });
 
-// prueba('http://google.com').then((e) => console.log(e));
-// console.log(typeof linksValidate);
+export const uniqueLinks = (arrLinks) => (
+  [...new Set(arrLinks.map((link) => link.href))]); // con ...new te devuelve array
+export const brokenLinks = (arrValidateLinks) => (
+  arrValidateLinks.filter((link) => link.status >= 400));
 
-// export const imprimirPromesa = (route) => {
-//   linksValidate(route)
-//     .then((res) => {
-//       console.log(res);
-//     })
-//     .catch((error) => console.log(error));
-// };
+// Función que devuelve los stats de los links en string
+export const optionStats = (route) => {
+  const arrMdLinks = extractLink(route);
+  return `Total: ${arrMdLinks.length}\nUnique: ${uniqueLinks(arrMdLinks).length}`;
+};
 
-
-// const arr = [1,2,3,4,4,5,6,6,6,6,6];
-// console.log(arr);
-// const newArr = new Set(arr);
-// console.log(newArr);
+// Función que devuelve los stats y validación de los links en string
+export const OptionsValidateStats = (route) => linksValidate(route)
+  .then((links) => `Total: ${links.length}\nUnique: ${uniqueLinks(links).length}\nBroken: ${brokenLinks(links).length}`);

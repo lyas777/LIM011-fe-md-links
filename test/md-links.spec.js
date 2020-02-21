@@ -6,7 +6,7 @@ import {
   extractLink,
 } from '../src/md-links/path';
 import { linksValidate } from '../src/md-links/validaLinks';
-import { mdLinks } from '../src/md-links/mdLinks';
+import mdLinks from '../src/md-links/mdLinks';
 
 const path = require('path');
 

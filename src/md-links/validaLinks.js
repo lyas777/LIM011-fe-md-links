@@ -3,7 +3,7 @@ import { extractLink } from './path';
 const fetch = require('node-fetch');
 const path = require('path');
 
-// eslint-disable-next-line import/prefer-default-export
+// Valida los links y los almacena en el array de objetos
 export const linksValidate = (route) => {
   const arrayObjectLinks = extractLink(route);
   const arrayLinksPromise = arrayObjectLinks.map((link) => fetch(link.href)
@@ -30,6 +30,7 @@ export const linksValidate = (route) => {
   return Promise.all(arrayLinksPromise);
 };
 
+// Opciones para validar y mostrar y estadisticas
 export const optionValidate = (route) => linksValidate(route)
   .then((arrayObjtLink) => {
     const strLinks = arrayObjtLink.map((element) => `${path.relative(process.cwd(), element.file)} ${element.href} ${element.statusText} ${element.status} ${element.text}`);

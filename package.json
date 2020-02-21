@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "color": "^3.1.2",
+    "colors": "^1.4.0",
     "htmlhint": "^0.11.0",
+    "link": "^0.1.5",
     "node-fetch": "^2.6.0",
     "validate.js": "^0.13.1"
   },
@@ -37,7 +39,7 @@
   "author": "LYAS",
   "license": "ISC",
   "bin": {
-    "say-hello": "src/md-links/cli.js"
+    "md-links": "lib/cli.js"
   },
   "bugs": {
     "url": "https://github.com/lyas777/LIM011-fe-md-links/issues"

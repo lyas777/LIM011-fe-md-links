@@ -11,25 +11,26 @@ export const convertToAbsolutePath = (route) => (
 export const checkIsFile = (route) => fs.statSync(route).isFile();
 
 export const fileReturn = (route) => {
-  let arrayOfPathFile = [];
+  let arrayFilePath = [];
   if (checkIsFile(route)) {
-    arrayOfPathFile.push(route);
+    arrayFilePath.push(route);
   } else {
     const files = fs.readdirSync(route);
     // console.log('verifica los directorios', files); // lee el directorio de la ruta
     files.forEach((element) => {
       const newRoute = path.join(route, element);
       // console.log('que me da:', newRoute);
-      arrayOfPathFile = arrayOfPathFile.concat(fileReturn(newRoute));
+      arrayFilePath = arrayFilePath.concat(fileReturn(newRoute));
       // console.log(arrayOfPathFile);
     });
   }
-  return arrayOfPathFile;
+  return arrayFilePath;
 };
 
 export const checkIsMd = (arrayFiles) => arrayFiles.filter((element) => path.extname(element) === '.md');
 export const readFile = (route) => fs.readFileSync(route, 'utf8');
 
+// guarda los link del archivo .md en un array de objetos
 export const extractLink = (route) => {
   const newArrayLinks = [];
   const arrayFiles = fileReturn(route);

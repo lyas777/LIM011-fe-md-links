@@ -8,13 +8,13 @@ const path = require('path');
 
 export default (route, options) => new Promise((resolve, reject) => {
   if (fs.existsSync(route)) {
-    if (options && options.validate) {
+    if (options.validate === true) {
       resolve((linksValidate(route)).then((e) => e));
     }
-    if (options && options.validate === false) {
+    if (options.validate === false) {
       resolve(extractLink(route));
     }
   } else {
-    reject(new Error(`No se encuentra la ruta: ${path.resolve(route)}`));
+    reject(new Error(`No se encuentra la ruta ingresada: ${path.resolve(route)}`));
   }
 });

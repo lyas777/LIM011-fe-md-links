@@ -199,8 +199,8 @@ describe('mdLinks', () => {
     expect(result).toStrictEqual(array4);
     done();
   }));
-  it('debería devolver message de error: No se encuentra la ruta', () => mdLinks('no-route')
+  it('debería devolver un mensage de error: No se encuentra la ruta ingresada', () => mdLinks('no-route')
     .catch((err) => {
-      expect(err.message).toEqual(`No se encuentra la ruta: ${path.join(process.cwd(), 'no-route')}`);
+      expect(err.message).toEqual(`No se encuentra la ruta ingresada: ${path.join(process.cwd(), 'no-route')}`);
     }));
 });

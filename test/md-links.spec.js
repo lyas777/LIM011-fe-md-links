@@ -5,7 +5,12 @@ import {
   checkIsMd,
   extractLink,
 } from '../src/md-links/path';
-import { linksValidate } from '../src/md-links/validaLinks';
+import {
+  linksValidate,
+  optionValidate,
+  optionStats,
+  OptionsValidateStats,
+} from '../src/md-links/validaLinks';
 import mdLinks from '../src/md-links/mdLinks';
 
 const path = require('path');
@@ -14,7 +19,6 @@ const ruta = path.join(process.cwd(), 'test', 'prueba', 'paraTest', 'prueba.md')
 const ruta1 = 'test/prueba/paraTest/prueba.md';
 const ruta2 = path.join(process.cwd(), 'src', 'md-links');
 const array1 = [
-  `${process.cwd()}/src/md-links/cli.js`,
   `${process.cwd()}/src/md-links/mdLinks.js`,
   `${process.cwd()}/src/md-links/path.js`,
   `${process.cwd()}/src/md-links/validaLinks.js`,
@@ -95,11 +99,11 @@ describe('convertToAbsolutePath', () => {
   it('debería ser una función', () => {
     expect(typeof convertToAbsolutePath).toBe('function');
   });
-  it('Debería verificar si la ruta es abosoluta', () => {
+  it('Debería devolver una ruta absoluta', () => {
     expect(convertToAbsolutePath(ruta)).toStrictEqual(ruta);
   });
 
-  it('Debería verificar devolver una ruta abosoluta', () => {
+  it('Debería devolver una ruta abosoluta', () => {
     expect(convertToAbsolutePath(ruta1)).toStrictEqual(ruta);
   });
 });
@@ -130,7 +134,7 @@ describe('checkIsMd', () => {
   it('debería ser una función', () => {
     expect(typeof checkIsMd).toBe('function');
   });
-  it('Debería verificar devolver una array de archivos .md', () => {
+  it('Debería devolver una array de archivos .md', () => {
     expect(checkIsMd(array2)).toStrictEqual(array3);
   });
 });
@@ -161,6 +165,26 @@ describe('linksValidate', () => {
     expect(result[2]).toEqual((linkOk));
     done();
   }));
+});
+
+describe('option validate', () => {
+  it('Should return the validated links', () => optionValidate(ruta)
+    .then((result) => {
+      expect(result).toEqual(`${ruta1} link.roto.com FAIL ERROR LinkRoto\n${ruta1} https://www.google.com/gatos FAIL 404 Error404\n${ruta1} https://nodejs.org/ OK 200 Node.js`);
+    }));
+});
+
+describe('option stats', () => {
+  it('Should return links statistics in a string', () => {
+    expect(optionStats(ruta)).toEqual('Total: 3\nUnique: 3');
+  });
+});
+
+describe('option validate and stats', () => {
+  it('Should return the links statistics and links validations in a string', () => OptionsValidateStats(ruta)
+    .then((result) => {
+      expect(result).toEqual('Total: 3\nUnique: 3\nBroken: 1');
+    }));
 });
 
 describe('mdLinks', () => {

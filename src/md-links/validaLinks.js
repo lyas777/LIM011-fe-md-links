@@ -47,6 +47,7 @@ export const optionStats = (route) => {
   const arrMdLinks = extractLink(route);
   return `Total: ${arrMdLinks.length}\nUnique: ${uniqueLinks(arrMdLinks).length}`;
 };
+console.log(optionStats('test/prueba/paraTest/prueba.md'));
 
 // Función que devuelve los stats y validación de los links en string
 export const OptionsValidateStats = (route) => linksValidate(route)

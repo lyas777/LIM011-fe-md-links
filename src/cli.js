@@ -16,7 +16,6 @@ const options = {
 };
 
 process.argv.forEach((element) => {
-  console.log(element);
   if (element === '--stats' || element === '--s' || element === 's' || element === 'S') {
     options.stats = true;
   }
